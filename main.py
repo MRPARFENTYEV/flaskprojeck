@@ -16,9 +16,10 @@
 #     Сделайте роут на Flask.
 #     POST метод должен создавать объявление, GET - получать объявление, DELETE - удалять объявление.
 import flask
-from flask import jsonify
+from flask import jsonify,request
 from flask.views import MethodView
 from models import Advertisement, Session
+
 
 app = flask.Flask('app')
 
@@ -30,26 +31,41 @@ app = flask.Flask('app')
 # advertisement
 class AdvertisementView(MethodView):
     def get(self, advertisement_id: int):
-        pass
+        with Session() as session:
+            advertisement = Advertisement.get(Advertisement,advertisement_id)
+            return jsonify({'id':advertisement.id, 'name':advertisement.name, 'text':advertisement.main_text})
 
     def post(self):  # создание статьи, которой еще нет
         receiving_data = request.json
         with Session() as session:
-            new_advertisement =Advertisement(**receiving_data)
+            new_advertisement = Advertisement(**receiving_data)
             session.add(new_advertisement)
             session.commit()
-            return jsonify({'id':new_advertisement.id})
+            return jsonify({'id': new_advertisement.id})
 
     def patch(self, advertisement_id: int):
-        pass
+        advertisement_data = request.json
+        with Session() as session:
+            adv = advertisement.get(Advertisement, advertisement_id)
+            for key,value in advertisement_data.items():
+                setattr(data,key,value)
+            session.commit()
+            return jsonify({'id': advertisement.id, 'name': advertisement.name, 'text': advertisement.main_text})
 
     def delete(self, advertisement_id: int):
-        pass
+        with Session() as session:
+            new_advertisement = session.get(advertisement_id)
+            session.delete(advertisement_id)
+            session.commit()
+            return jsonify({"deleted": advertisement_id})
 
 
-advertisement_view = AdvertisementView.as_view('advertisement_view')
+
+advertisement_view = AdvertisementView.as_view('advertisement_view')#преобразование класса в функцию.
 app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
-app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
-
+app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['POST'])
+# advertisement_view = AdvertisementView.as_view('advertisement')
+# app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
+# app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)

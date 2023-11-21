@@ -22,7 +22,7 @@ class Advertisement(Base):
     name: Mapped[str] =mapped_column(String(50), unique=True,nullable=False)
     publicationtion_time: Mapped[datetime]=mapped_column(DateTime,server_default=func.now())
     main_text: Mapped[str] =mapped_column(String(2000), unique=True,nullable=False)
-    # почему-то ошибка TypeError: 'type' object does not support item assignment в Mapped[datetime]
-    # добавить текстовую колонну, для тела статьи
+
+
 
 Base.metadata.create_all(bind=engine)
