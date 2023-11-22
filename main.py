@@ -51,18 +51,18 @@ class AdvertisementView(MethodView):
     def patch(self, advertisement_id: int):
         advertisement_data = request.json
         with Session() as session:
-            adv = advertisement.get(Advertisement, advertisement_id)
+            adv = session.get(Advertisement, advertisement_id)
             for key,value in advertisement_data.items():
-                setattr(data,key,value)
+                setattr(adv,key,value)
             session.commit()
             return jsonify({'id': advertisement.id, 'name': advertisement.name, 'text': advertisement.main_text})
 
     def delete(self, advertisement_id: int):
         with Session() as session:
-            new_advertisement = session.get(advertisement_id)
-            session.delete(advertisement_id)
+            new_advertisement = session.get(Advertisement,advertisement_id)
+            session.delete(new_advertisement)
             session.commit()
-            return jsonify({"deleted": advertisement_id})
+            return jsonify({'deleted': 'advertisement'})
 
 
 
