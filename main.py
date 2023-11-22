@@ -24,11 +24,6 @@ from models import Advertisement, Session
 app = flask.Flask('app')
 
 
-# def hello_world():
-#     return jsonify({'print':'Hello,World!'})
-# app.add_url_rule('/hello_world',view_func=hello_world, methods=['GET'])
-# app.run()
-# advertisement
 class AdvertisementView(MethodView):
     '''ВОЗВРАЩАЮ ДАННЫЕ ПО ID'''
     def get(self, advertisement_id):
@@ -69,11 +64,8 @@ class AdvertisementView(MethodView):
 advertisement_view = AdvertisementView.as_view('advertisement_view')#преобразование класса в функцию.
 
 app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET','PATCH','DELETE'])
-# app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET','PATCH','DELETE'])
 
 app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['POST'])
-# advertisement_view = AdvertisementView.as_view('advertisement')
-# app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
-# app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
+
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=5000, debug=True)

@@ -13,7 +13,7 @@ response = requests.post('http://127.0.0.1:5000/advertisement',
 # response = requests.patch('http://127.0.0.1:5000/advertisement/2',
 #                         json ={'name':'advertisement122', 'main_text':'The main text of the middle earth'}
 #                         )
-#не смотря на ошибку, в бд информация оюновлена: NameError: name 'advertisement' is not defined
+#не смотря на ошибку, в бд информация обновлена: NameError: name 'advertisement' is not defined
 # _____________________________________________________________________________________________
 '''удаляю информацию'''
 # response = requests.delete('http://127.0.0.1:5000/advertisement/2')

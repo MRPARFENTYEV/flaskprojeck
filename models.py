@@ -20,6 +20,7 @@ class Advertisement(Base):
     __tablename__ = 'Adverticement'
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] =mapped_column(String(50), unique=True,nullable=False)
+    publisher: Mapped[str] =mapped_column(String(120), unique=True,nullable=False)
     publicationtion_time: Mapped[datetime]=mapped_column(DateTime,server_default=func.now())
     main_text: Mapped[str] =mapped_column(String(2000), unique=True,nullable=False)
 
