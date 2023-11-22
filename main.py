@@ -30,14 +30,19 @@ app = flask.Flask('app')
 # app.run()
 # advertisement
 class AdvertisementView(MethodView):
-    def get(self, advertisement_id: int):
+    '''ВОЗВРАЩАЮ ДАННЫЕ ПО ID'''
+    def get(self, advertisement_id):
         with Session() as session:
-            advertisement = Advertisement.get(Advertisement,advertisement_id)
-            return jsonify({'id':advertisement.id, 'name':advertisement.name, 'text':advertisement.main_text})
+            advertisement = session.get(Advertisement,advertisement_id)
+            return jsonify({'id': advertisement.id, 'name': advertisement.name,
+                            'publication time': advertisement.publicationtion_time.isoformat(),
+                            'text': advertisement.main_text})
 
+    '''СОЗДАЮ ЗАПИСИ В ТАБЛИЦЕ'''
     def post(self):  # создание статьи, которой еще нет
         receiving_data = request.json
         with Session() as session:
+            '''создание новой таблички внутри сессии'''
             new_advertisement = Advertisement(**receiving_data)
             session.add(new_advertisement)
             session.commit()
@@ -62,7 +67,10 @@ class AdvertisementView(MethodView):
 
 
 advertisement_view = AdvertisementView.as_view('advertisement_view')#преобразование класса в функцию.
-app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])
+
+app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET','PATCH','DELETE'])
+# app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET','PATCH','DELETE'])
+
 app.add_url_rule('/advertisement', view_func=advertisement_view, methods=['POST'])
 # advertisement_view = AdvertisementView.as_view('advertisement')
 # app.add_url_rule('/advertisement/<int:advertisement_id>', view_func=advertisement_view, methods=['GET', 'PATCH', 'DELETE'])

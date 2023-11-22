@@ -25,4 +25,5 @@ class Advertisement(Base):
 
 
 
+'''СОЗДАЮ МИГРАЦИИ'''
 Base.metadata.create_all(bind=engine)

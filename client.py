@@ -5,7 +5,7 @@ import requests
 #                         )
 
 # ___________________________________________________________________________________________
-# response = requests.get('http://127.0.0.1:5000/advertisement/2')
+response = requests.get('http://127.0.0.1:5000/advertisement/1')
 # AttributeError: type object 'Advertisement' has no attribute 'get'
 #____________________________________________________________________________________________
 
