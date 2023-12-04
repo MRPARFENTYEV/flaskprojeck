@@ -21,6 +21,8 @@ from flask.views import MethodView
 from models import Advertisement, Session
 
 
+
+
 app = flask.Flask('app')
 
 
